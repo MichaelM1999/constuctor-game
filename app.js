@@ -6,7 +6,8 @@ class Player {
         this.title = title;
         this.level = 0;
         this.maxlevel = 100;
-        this.damage = 5;
+        this.maxDamage = 5;
+        this.minDamage = 1;
         this.health = 100;
         this.maxHealth = 100;
         this.enemyHealth = 20;
@@ -15,7 +16,8 @@ class Player {
     }
     levelUp() {
         this.level++;
-        this.damage += 2;
+        this.Maxdamage += 2;
+        this.minDamage += 2;
         this.maxHealth += 10;
         this.health = this.maxHealth;
         this.enemyMaxHealth += 10;
@@ -38,6 +40,7 @@ class Player {
         } 
     }
     attack() {
+        let hit =;
         this.enemyHealth -= this.damage;
         console.log("you have hit the enemy for " + this.damage + " he now has " + this.enemyHealth);
         if (this.enemyHealth <= 0 && this.level <= 100) {
@@ -63,4 +66,14 @@ inquirer.prompt([
     const user = new Player(name.name, name.title);
     console.log("These are your stats:");
     console.log(user);
+  })
+  .then(()=> {
+      inquirer.prompt([
+          {
+              type: "list",
+              name: "luckeyNum",
+              message: "what is your lucky number",
+              choices: [1,2,3,4,5]
+          }
+      ]).then((luckyNum) => {})
   })
