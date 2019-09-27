@@ -39,10 +39,10 @@ class Player {
         while (this.enemyHealth > 0 || this.health >= 0){
         } 
     }
-    attack() {
-        let hit =;
-        this.enemyHealth -= this.damage;
-        console.log("you have hit the enemy for " + this.damage + " he now has " + this.enemyHealth);
+    attack(damage) {
+        // let hit =;
+        this.enemyHealth -= damage;
+        console.log("you have hit the enemy for " + damage + " he now has " + this.enemyHealth);
         if (this.enemyHealth <= 0 && this.level <= 100) {
         this.levelUp();
         this.enemy();
@@ -50,7 +50,7 @@ class Player {
     }
 }
 // const mike = new Player("mike", "the cool guy");
-
+let user;
 inquirer.prompt([
     {
       type: "input",
@@ -63,9 +63,10 @@ inquirer.prompt([
         message: "what is your title? ex. 'The Great'"
     }
   ]).then((name) => {
-    const user = new Player(name.name, name.title);
+    user = new Player(name.name, name.title);
     console.log("These are your stats:");
     console.log(user);
+    return user;
   })
   .then(()=> {
       inquirer.prompt([
@@ -75,5 +76,13 @@ inquirer.prompt([
               message: "what is your lucky number",
               choices: [1,2,3,4,5]
           }
-      ]).then((luckyNum) => {})
+      ]).then((luckyNum) => {
+          let num = Math.floor(Math.random()*5)
+        //   console.log(num);
+        if(luckyNum === num){
+            user.attack(this.maxDamage);
+        } else{
+            user.attack(this.minDamage);
+        }
+      })
   })
